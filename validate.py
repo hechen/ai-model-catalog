@@ -2,6 +2,8 @@
 
 import json
 import math
+import re
+from urllib.parse import urlsplit
 import sys
 from pathlib import Path
 
@@ -13,6 +15,21 @@ def validate(catalog):
     assert {p["id"] for p in providers} >= {"openai", "claude"}, "Missing required provider"
     assert len({p["id"] for p in providers}) == len(providers), "Duplicate provider"
     for provider in providers:
+        assert isinstance(provider["id"], str) and provider["id"], "Missing provider ID"
+        if "api" in provider:
+            assert provider["id"] not in {"openai", "claude", "custom", "apple-intelligence", "on-device-llm", "on-device-vlm"}, "Reserved provider ID"
+            assert re.fullmatch(r"[a-z][a-z0-9-]*", provider["id"]), "Invalid provider ID"
+            assert provider.get("displayName", "").strip(), "Missing display name"
+            api = provider["api"]
+            assert api["format"] == "openai-chat-completions", "Unsupported API format"
+            assert api["tokenLimitParameter"] in {"max_tokens", "max_completion_tokens"}, "Unsupported token limit"
+            for value in [api["baseURL"], provider.get("apiKeyURL"), provider.get("privacyPolicyURL")]:
+                if value is None:
+                    continue
+                url = urlsplit(value)
+                assert url.scheme == "https" and url.hostname and not (url.username or url.password or url.query or url.fragment), "Unsafe URL"
+            for model in provider["models"]:
+                assert set(model.get("capabilities", ["textInput"])) <= {"textInput", "visionInput", "streaming"}, "Unsupported capability"
         models = provider["models"]
         ids = [model["id"] for model in models]
         assert ids and len(set(ids)) == len(ids), "Empty or duplicate model list"
