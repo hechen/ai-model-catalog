@@ -11,8 +11,9 @@ models, and retirement fallbacks. It contains no SDK source or credentials.
 ## Update models
 
 1. Edit `cloud-model-catalog.json` using the provider's current API documentation.
-2. Increase `revision` using the sortable `YYYY-MM-DD.NN` format. Preserve the
-   existing schema and supported model selections unless retiring a model.
+2. Increase `revision` lexicographically (for example, `2026-09-20.2` to
+   `2026-09-20.3`). Preserve the existing schema and supported model selections
+   unless retiring a model. Do not use `.10` after `.9`: it sorts earlier.
 3. Run `python3 validate.py` and push the change to `main`.
 
 Routine model, pricing, and retirement updates do not require an SDK tag or app
