@@ -1,14 +1,21 @@
 # AI model catalog
 
-The public cloud-model catalog used by CHSharedKit apps. This repository is the
+The public model catalogs used by CHSharedKit apps. This repository is the
 authoritative source for model IDs, display names, estimated prices, recommended
 models, and retirement fallbacks. It contains no SDK source or credentials.
 
-## Endpoint
+`cloud-model-catalog.json` describes cloud API providers.
+`offline-model-catalog.json` describes pinned MLX text-model releases, exact
+download files and checksums, and per-app evaluation status. See
+[Offline model catalog](OFFLINE_MODELS.md) for its separate schema, validation,
+runtime compatibility boundary, and publication workflow. Refreshing offline
+metadata does not download model weights or switch the user's model.
+
+## Cloud catalog endpoint
 
 `https://raw.githubusercontent.com/hechen/ai-model-catalog/main/cloud-model-catalog.json`
 
-## Update models
+## Update cloud models
 
 1. Edit `cloud-model-catalog.json` using the provider's current API documentation.
 2. Increase `revision` lexicographically (for example, `2026-09-20.2` to
@@ -25,7 +32,7 @@ CHSharedKit retains a bundled copy for offline startup. Refresh that resource
 from this repository when preparing an SDK release; do not edit it as the live
 catalog's source of truth.
 
-## Compatibility with shipped apps
+## Compatibility with shipped cloud-catalog clients
 
 Older apps use `https://hechen.github.io/apps/closet/cloud-model-catalog.json`.
 That URL remains available as a generated compatibility copy. The blog's Pages
@@ -40,7 +47,7 @@ gh workflow run hugo.yml --repo hechen/hechen.github.io --ref master
 
 Verify both URLs after deployment. No new cross-repository credential is needed.
 
-## Format
+## Cloud catalog format
 
 `schemaVersion: 1` matches `CHAICloudModelCatalogManifest` in CHSharedKit. Prices
 are USD per million tokens and are estimates for standard processing; the schema
