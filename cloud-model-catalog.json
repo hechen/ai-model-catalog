@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "revision": "2026-09-20.3",
+  "revision": "2026-09-24.1",
   "providers": [
     {
       "id": "openai",
@@ -14,7 +14,9 @@
         "gpt-4.1-nano",
         "o4-mini",
         "gpt-5-instant",
-        "gpt-5-thinking"
+        "gpt-5-thinking",
+        "gpt-5.3",
+        "gpt-5.5-pro"
       ],
       "models": [
         {
@@ -23,6 +25,20 @@
           "inputPerMillion": 10.0,
           "outputPerMillion": 50.0,
           "imageInputPerMillion": 10.0
+        },
+        {
+          "id": "gpt-6-sol",
+          "name": "GPT-6 Sol",
+          "inputPerMillion": 2.0,
+          "outputPerMillion": 10.0,
+          "imageInputPerMillion": 2.0
+        },
+        {
+          "id": "gpt-6-luna",
+          "name": "GPT-6 Luna (fastest, lowest cost)",
+          "inputPerMillion": 0.1,
+          "outputPerMillion": 0.5,
+          "imageInputPerMillion": 0.1
         },
         {
           "id": "gpt-5.6-sol",
@@ -40,28 +56,21 @@
         },
         {
           "id": "gpt-5.6-luna",
-          "name": "GPT-5.6 Luna (fastest, lowest cost)",
+          "name": "GPT-5.6 Luna",
           "inputPerMillion": 0.2,
           "outputPerMillion": 1.2,
           "imageInputPerMillion": 0.2
         },
         {
-          "id": "gpt-5.5",
-          "name": "GPT-5.5",
-          "inputPerMillion": 5.0,
-          "outputPerMillion": 30.0,
-          "imageInputPerMillion": 5.0
-        },
-        {
           "id": "gpt-5.4",
-          "name": "GPT-5.4",
+          "name": "GPT-5.4 (legacy)",
           "inputPerMillion": 2.5,
           "outputPerMillion": 15.0,
           "imageInputPerMillion": 2.5
         },
         {
           "id": "gpt-5.4-mini",
-          "name": "GPT-5.4 Mini",
+          "name": "GPT-5.4 Mini (legacy)",
           "inputPerMillion": 0.75,
           "outputPerMillion": 4.5,
           "imageInputPerMillion": 0.75
@@ -81,29 +90,25 @@
         "claude-sonnet-4-20250514",
         "claude-3-7-sonnet-20250219",
         "claude-3-5-haiku-20241022",
-        "claude-3-haiku-20240307"
+        "claude-3-haiku-20240307",
+        "claude-3-5-sonnet-20241022",
+        "claude-3-opus-20240229",
+        "claude-3-sonnet-20240229"
       ],
       "models": [
         {
-          "id": "claude-fable-5",
-          "name": "Claude Fable 5 (highest capability)",
+          "id": "claude-fable-5-1",
+          "name": "Claude Fable 5.1 (highest capability)",
           "inputPerMillion": 10.0,
           "outputPerMillion": 50.0,
           "imageInputPerMillion": 10.0
         },
         {
-          "id": "claude-opus-5",
-          "name": "Claude Opus 5 (advanced reasoning)",
-          "inputPerMillion": 5.0,
-          "outputPerMillion": 25.0,
-          "imageInputPerMillion": 5.0
-        },
-        {
-          "id": "claude-opus-4-8",
-          "name": "Claude Opus 4.8 (agentic coding)",
-          "inputPerMillion": 5.0,
-          "outputPerMillion": 25.0,
-          "imageInputPerMillion": 5.0
+          "id": "claude-opus-5-5",
+          "name": "Claude Opus 5.5 (advanced reasoning)",
+          "inputPerMillion": 4.0,
+          "outputPerMillion": 20.0,
+          "imageInputPerMillion": 4.0
         },
         {
           "id": "claude-sonnet-5",
@@ -120,15 +125,22 @@
           "imageInputPerMillion": 1.0
         },
         {
-          "id": "claude-opus-4-7",
-          "name": "Claude Opus 4.7 (legacy)",
+          "id": "claude-fable-5",
+          "name": "Claude Fable 5 (legacy)",
+          "inputPerMillion": 10.0,
+          "outputPerMillion": 50.0,
+          "imageInputPerMillion": 10.0
+        },
+        {
+          "id": "claude-opus-5",
+          "name": "Claude Opus 5 (legacy)",
           "inputPerMillion": 5.0,
           "outputPerMillion": 25.0,
           "imageInputPerMillion": 5.0
         },
         {
-          "id": "claude-opus-4-6",
-          "name": "Claude Opus 4.6 (legacy)",
+          "id": "claude-opus-4-8",
+          "name": "Claude Opus 4.8 (legacy)",
           "inputPerMillion": 5.0,
           "outputPerMillion": 25.0,
           "imageInputPerMillion": 5.0
@@ -157,8 +169,20 @@
       "retiredModelIDs": [],
       "models": [
         {
+          "id": "grok-4.7",
+          "name": "Grok 4.7",
+          "inputPerMillion": 2,
+          "outputPerMillion": 6,
+          "imageInputPerMillion": 2,
+          "capabilities": [
+            "textInput",
+            "visionInput",
+            "streaming"
+          ]
+        },
+        {
           "id": "grok-4.6",
-          "name": "Grok 4.6",
+          "name": "Grok 4.6 (recommended)",
           "inputPerMillion": 2,
           "outputPerMillion": 6,
           "imageInputPerMillion": 2,
