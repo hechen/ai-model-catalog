@@ -11,6 +11,8 @@ INT64_MAX = 2**63 - 1
 HEX40 = re.compile(r"[0-9a-f]{40}\Z")
 HEX64 = re.compile(r"[0-9a-f]{64}\Z")
 IDENTIFIER = re.compile(r"[a-z0-9][a-z0-9._-]{0,127}\Z")
+# BCP 47 language IDs such as "en", "zh-Hans" or "pt-BR" (revision 3).
+LANGUAGE_ID = re.compile(r"[a-z]{2,3}(-[A-Z][a-z]{3})?(-[A-Z]{2})?\Z")
 REPO_ID = re.compile(r"[A-Za-z0-9][A-Za-z0-9._-]*/[A-Za-z0-9][A-Za-z0-9._-]*\Z")
 LICENSES = {"Apache 2.0", "MIT", "Llama Community", "Gemma ToU", "Qwen Research", "Other"}
 QUALITIES = {"Fast", "Balanced", "Higher Quality", "Highest Quality"}
@@ -102,6 +104,12 @@ def validate(catalog):
         choice(model.get("chatTemplate"), {"chatML", "llama3", "gemma"}, f"{model_id}.chatTemplate")
         for key in ("languages", "strengths"):
             string_list(model.get(key), f"{model_id}.{key}")
+        # Optional: languages the model answered in during a recorded
+        # local-model-conformance run with a reply-language rule.
+        if "replyLanguages" in model:
+            string_list(model["replyLanguages"], f"{model_id}.replyLanguages")
+            for language in model["replyLanguages"]:
+                require(LANGUAGE_ID.fullmatch(language), f"{model_id}: invalid reply language {language!r}")
         require(model.get("isCustom") is False, f"{model_id}: catalog model cannot be custom")
         if model.get("sha256") is not None:
             require(isinstance(model["sha256"], str) and HEX64.fullmatch(model["sha256"]),

@@ -79,6 +79,16 @@ class OfflineCatalogTests(unittest.TestCase):
                 with self.assertRaises(ValidationError):
                     validate(candidate)
 
+    def test_reply_languages_are_optional_bcp47_ids(self):
+        validate(self.catalog)
+        self.model["replyLanguages"] = ["en", "zh-Hans", "pt-BR"]
+        validate(self.catalog)
+        for bad in (["English"], ["zh_Hans"], ["en", "en"], "en"):
+            broken = copy.deepcopy(self.catalog)
+            broken["models"][0]["replyLanguages"] = bad
+            with self.assertRaises(ValidationError):
+                validate(broken)
+
     def test_duplicate_ids_are_rejected(self):
         self.catalog["models"].append(copy.deepcopy(self.model))
         self.invalid()

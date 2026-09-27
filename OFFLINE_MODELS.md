@@ -164,3 +164,23 @@ CI runs these checks without networking. Structural validation verifies schema,
 safe paths/URLs, pins, digest shapes, totals, and evaluation metadata; it cannot
 prove upstream availability, model output quality, license permission for a
 particular use, or successful on-device inference.
+
+## User-facing copy (revision 3)
+
+`description`, `strengths` and each app's `reason` are shown to users, so they
+are plain English: the maker, model, parameter count and quantization for the
+description; two or three short benefits ("Fast", "Multilingual", "Larger
+download") for strengths; one plain sentence per app. Evaluation status belongs
+in `verification`/`evidence`, not in the copy. CHSharedKit 2.19.13 and later
+show strengths and reasons only to English-language apps and show translated
+facts (quality tier, languages, "Speaks your language", "Tested in <app>") to
+everyone else.
+
+`replyLanguages` (optional, BCP 47) lists the languages a model answered in
+during a recorded `local-model-conformance --languages` run (CHSharedKit),
+where the coaching question is asked in each language with an app-style
+reply rule. It is measured, unlike `languages`, which is the vendor's claim.
+Revision 3 records the 2026-09-27 run on CHSharedKit 2.19.12. LiftCoach is
+marked `passed` for Qwen3 1.7B, Phi-3 Mini and Phi-3.5 Mini, whose answers in
+that run were clean, parsed as strict JSON and read the numbers correctly;
+the other models gave clean answers but misread them at least once.
